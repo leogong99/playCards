@@ -31,6 +31,22 @@ var playDeckObj = new function(){
 			}
 		}
 	};
+
+	var swapArrayElement = function(arr, c1, c2) {
+		var tmpCard = new playCardObj();
+		tmpCard.initial(arr[c1].rank, arr[c1].color);
+		arr[c1] = arr[c2];
+		arr[c2] = tmpCard;
+	}
+
+	this.shuffleCard = function(){
+		var i = 0,
+			numofCardsLeft = this.deckCard.length;
+		for(i = 0; i < numofCardsLeft; i++) {
+			var randomCardInx = Math.floor(Math.random()*numofCardsLeft);
+			swapArrayElement(this.deckCard, i, randomCardInx);
+		}
+	};
 	this.getDeckCard = function(){
 		return this.deckCard;
 	};

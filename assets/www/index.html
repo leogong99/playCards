@@ -23,10 +23,28 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/game.css" />
+         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.2.css" />
         <title>Hello World</title>
     </head>
     <body>
+            <div id="startPage" data-role="page">
+               <div data-role="content" class="startBackground">
+                    <center>
+                    <a id="gameStartBtn" href="#gamePage" data-role="button" data-theme="c" data-inline="true">Start Game</a>
+                    </center>
+                </div>
+            </div>
+            <div id="gamePage" data-role="page" class="hidden">
+                 <div  class="gameBackground">
+                    <center>
+                    <a id="gameBackBtn" href="#startPage" data-role="button" data-theme="c" data-inline="true">Back</a>
+                    </center>
+                 </div>
+            </div>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script TYPE="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
         <script type="text/javascript" src="js/gameEngine.js"></script>
         <script type="text/javascript" src="js/playCardObj.js"></script>
         <script type="text/javascript" src="js/playDeckObj.js"></script>
