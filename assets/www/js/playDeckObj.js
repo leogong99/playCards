@@ -1,6 +1,6 @@
 var NUMOFCARDSINONESET = 52;
 var NUMOFJOKERINONESET = 2;
-var COLORFORCARDS = ['heart', 'spade', 'club', 'diamond'];
+var COLORFORCARDS = ['hearts', 'spades', 'clubs', 'diamonds'];
 var COLORFORJOKERS = ['black', 'red'];
 var playDeckObj = new function(){
 	'use strict'
@@ -25,7 +25,7 @@ var playDeckObj = new function(){
 			if(isIncludeJoker) {
 				for(n = 0; n < NUMOFJOKERINONESET; n++) {
 					var joker = new playCardObj();
-					joker.initial(parseInt(n/numofJokers), COLORFORJOKERS[n%numofJokers]);
+					joker.initial(15 + n, COLORFORJOKERS[n%numofJokers]);
 					this.deckCard.push(joker);
 				}
 			}
