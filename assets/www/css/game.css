@@ -30,3 +30,12 @@
 	right: 5px;
 	top: 0px;
 }
+.cardContent {
+	margin:auto;
+	width: 80%;
+}
+.cardsInHand {
+	width: 70px;
+	display: relative;
+	left:-30px;
+}
