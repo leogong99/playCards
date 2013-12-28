@@ -25,7 +25,7 @@ var playDeckObj = new function(){
 			if(isIncludeJoker) {
 				for(n = 0; n < NUMOFJOKERINONESET; n++) {
 					var joker = new playCardObj();
-					joker.initial(15 + n, COLORFORJOKERS[n%numofJokers]);
+					joker.initial(14 + n, COLORFORJOKERS[n%numofJokers]);
 					this.deckCard.push(joker);
 				}
 			}

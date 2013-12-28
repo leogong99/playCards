@@ -19,8 +19,10 @@
 var app = {
     // Application Constructor
     initialize: function() {
-    	$('#gameStartBtn').click(function(){
+    	//$('#gameStartBtn').click(function(){
     		lg.gameEngine.start();
-    	});
+    	//});
     }
 };
+
+app.initialize();
