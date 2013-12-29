@@ -40,12 +40,7 @@ var playDeckObj = new function(){
 	}
 
 	this.shuffleCard = function(){
-		var i = 0,
-			numofCardsLeft = this.deckCard.length;
-		for(i = 0; i < numofCardsLeft; i++) {
-			var randomCardInx = Math.floor(Math.random()*numofCardsLeft);
-			swapArrayElement(this.deckCard, i, randomCardInx);
-		}
+		this.deckCard = _.shuffle(this.deckCard);
 	};
 	this.getDeckCard = function(){
 		return this.deckCard;
