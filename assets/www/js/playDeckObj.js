@@ -45,4 +45,7 @@ var playDeckObj = new function(){
 	this.getDeckCard = function(){
 		return this.deckCard;
 	};
+	this.releaseCard = function() {
+		return this.deckCard.pop();
+	};
 };
