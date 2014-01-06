@@ -46,7 +46,6 @@
 	height: 70px;
 }
 .cardsInMiddle{
-	width: 70px;
 	position: absolute;
 }
 .cardsInTop{
@@ -66,12 +65,28 @@
 	display: block;
 	right: 0px;
 }
+.cardsInMiddle img{
+	width: 70px;
+	position: absolute;
+	display: inline;
+	margin: auto;
+}
 .cardContent{
-	padding: 0px;
+	display: inline-block;
+	margin: auto;
+	padding: 0;
+	zoom: 1;
 }
 .middleContent{
 	position: absolute;
 	left: 0px;
 	top: 0px;
 	width: 100%;
+}
+.centerContent{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
 }
