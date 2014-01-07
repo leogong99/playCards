@@ -9,21 +9,42 @@ var drawCardSpeed = 100;
 
 lg.gameEngine = new function(){
 	'use strict'
-	var displayPlayerCards = function(cards) {
+	var displayPlayerCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
 		var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
-		for(var i = 0; i < numberOfCards; i++){
-			myCards += '<li class="cardsInHand">';
-			myCards += '<img id="cards' + i +'"  src="./img/cards/'+ (cards[i].rank + 1) + '_of_' + cards[i].color + '.png"/>';
+		console.log('a');
+		//for(var i = 0; i < numberOfCards; i++){
+			if($('.bottomContent .cardsInHand').length !== 0) {
+				myCards = '<li class="cardsInHand" style="margin-left:' + margin + '">';
+			} else {
+				myCards = '<li class="cardsInHand">';
+			}
+
+			myCards += '<img src="./img/cards/'+ (cards[pos].rank + 1) + '_of_' + cards[pos].color + '.png"/>';
 			myCards += '</li>';
-		}
-		$('.bottomContent .cardContent').html(myCards);
-		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
-		$('.bottomContent .cardsInHand:not(:first-of-type)').css('margin-left', margin);
+			if($('.bottomContent .cardsInHand').length === 0) {
+				$('.bottomContent .cardContent').html(myCards);
+			} else if (numberOfCards === 1 && pos === 1) {
+				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(1)');
+			} else if ($('.bottomContent .cardsInHand').length === numberOfCards - 1) {
+				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(' + (pos + 1) + ')');
+			} else {
+				$(myCards).insertBefore('.bottomContent .cardsInHand:nth-child(' + (pos + 1) + ')');
+			}
+			/*} else {
+				myCards += '<li class="cardsInHand" >';
+				myCards += '<img id="cards' + pos +'"  src="./img/cards/'+ (cards[pos].rank + 1) + '_of_' + cards[pos].color + '.png"/>';
+				myCards += '</li>';
+				$('.bottomContent .cardContent').html(myCards);
+			}*/
+		//}
+		
+		
+		//$('.bottomContent .cardsInHand:not(:first-of-type)').css('margin-left', margin);
 	};
 
-	var displayTopCards = function(cards) {
+	var displayTopCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
 		var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
@@ -38,7 +59,7 @@ lg.gameEngine = new function(){
 		$('.topContent .cardsInHand:not(:first-of-type)').css('margin-left', margin);
 	};
 
-	var displayLeftCards = function(cards) {
+	var displayLeftCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
 		var margin = (rowHeight - cardWidth)/ 13 - cardWidth  +'px';
@@ -53,7 +74,7 @@ lg.gameEngine = new function(){
 		$('.leftContent .cardsInSide:not(:first-of-type)').css('margin-top', margin);
 	};
 
-	var displayRightCards = function(cards) {
+	var displayRightCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
 		var margin = (rowHeight - cardWidth)/ 13 - cardWidth  +'px';
@@ -87,14 +108,15 @@ lg.gameEngine = new function(){
 		var middleCardsContents = $('.centerContent .cardsInMiddle');
 		var cards = playDeckObj.getDeckCard();
 		var i = cards.length - 1;
+		var pos = 0;
 		if(i >= 0){
 			if(i % 4 === 0) {
 				$(middleCardsContents[i]).animate({
 					bottom: '5px',
 					opacity: 0
 				}, drawCardSpeed, function(){
-					players[0].insertCards(playDeckObj.releaseCard());
-					displayPlayerCards(players[0].getCards());
+					pos = players[0].insertCards(playDeckObj.releaseCard());
+					displayPlayerCards(players[0].getCards(), pos);
 					drawCards(players, playDeckObj)
 				});
 			} else if(i % 4 === 1) {
@@ -102,8 +124,8 @@ lg.gameEngine = new function(){
 					left: '5px',
 					opacity: 0
 				}, drawCardSpeed, function(){
-					players[1].insertCards(playDeckObj.releaseCard());
-					displayLeftCards(players[1].getCards());
+					pos = players[1].insertCards(playDeckObj.releaseCard());
+					displayLeftCards(players[1].getCards(), pos);
 					drawCards(players, playDeckObj)
 				});
 			} else if(i % 4 === 2) {
@@ -111,8 +133,8 @@ lg.gameEngine = new function(){
 					top: '50px',
 					opacity: 0
 				}, drawCardSpeed, function(){
-					players[2].insertCards(playDeckObj.releaseCard());
-					displayTopCards(players[2].getCards());
+					pos = players[2].insertCards(playDeckObj.releaseCard());
+					displayTopCards(players[2].getCards(), pos);
 					drawCards(players, playDeckObj)
 				});
 			} else {
@@ -120,8 +142,8 @@ lg.gameEngine = new function(){
 					right: '5px',
 					opacity: 0
 				}, drawCardSpeed, function(){
-					players[3].insertCards(playDeckObj.releaseCard());
-					displayRightCards(players[3].getCards());
+					pos = players[3].insertCards(playDeckObj.releaseCard());
+					displayRightCards(players[3].getCards(), pos);
 
 					drawCards(players, playDeckObj)
 				});
@@ -140,6 +162,7 @@ lg.gameEngine = new function(){
 		for(i = 0; i < numofPlayer; i++) {
 			players[i] = new player();
 		}
+		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
 
 		displayCenterCards(cards);
 
