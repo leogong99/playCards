@@ -153,10 +153,25 @@ lg.gameEngine = new function(){
 					drawCards(players, playDeckObj)
 				});
 			}
-		};
+		} else {
+			assignEventListener();
+		}
 
 	};
-
+	var assignEventListener = function() {
+		var selectCard = [];
+		$('.bottomContent .cardsInHand').on('click', function(){
+			if(_.indexOf(selectCard, this) < 0) {
+				$(this).css('margin-top', '-30px');
+				$(selectCard).css('margin-top', '0px');
+				selectCard.push(this);
+			} else {
+				$(selectCard).css('margin-top', '0px');
+				selectCard = _.without(selectCard, this);
+			}
+			
+		});
+	};
 	var initGame = function() {
 		playDeckObj.init(1, true);
 		playDeckObj.shuffleCard();
@@ -176,19 +191,6 @@ lg.gameEngine = new function(){
 			players[i % numofPlayer].insertCards(playDeckObj.releaseCard());
 		}*/
 		drawCards(players, playDeckObj);
-
-		var selectCard = null;
-		$('.bottomContent .cardsInHand').click(function(){
-			if(selectCard != this) {
-				$(this).css('margin-top', '-30px');
-				$(selectCard).css('margin-top', '0px');
-				selectCard = this;
-			} else {
-				$(selectCard).css('margin-top', '0px');
-				selectCard = null;
-			}
-			
-		});
 	}
 
 	return {
