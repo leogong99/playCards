@@ -12,26 +12,26 @@ lg.gameEngine = new function(){
 	var displayPlayerCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
+		
 		console.log('a');
 		//for(var i = 0; i < numberOfCards; i++){
-			if($('.bottomContent .cardsInHand').length !== 0) {
-				myCards = '<li class="cardsInHand" style="margin-left:' + margin + '">';
-			} else {
-				myCards = '<li class="cardsInHand">';
-			}
-
+			myCards = '<li class="cardsInHand">';
 			myCards += '<img src="./img/cards/'+ (cards[pos].rank + 1) + '_of_' + cards[pos].color + '.png"/>';
 			myCards += '</li>';
 			if($('.bottomContent .cardsInHand').length === 0) {
 				$('.bottomContent .cardContent').html(myCards);
-			} else if (numberOfCards === 1 && pos === 1) {
-				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(1)');
-			} else if ($('.bottomContent .cardsInHand').length === numberOfCards - 1) {
-				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(' + (pos + 1) + ')');
+			} else if (pos === 0) {
+				console.log(numberOfCards + ' ' + pos + myCards.toString());
+				$(myCards).insertBefore('.bottomContent .cardsInHand:nth-child(1)');
+			} else if (pos === numberOfCards - 1) {
+				console.log(numberOfCards + ' ' + pos+ myCards.toString());
+				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(' + pos + ')');
+				
 			} else {
-				$(myCards).insertBefore('.bottomContent .cardsInHand:nth-child(' + (pos + 1) + ')');
+				console.log(numberOfCards + ' ' + pos+ myCards.toString());
+				$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(' + pos + ')');
 			}
+
 			/*} else {
 				myCards += '<li class="cardsInHand" >';
 				myCards += '<img id="cards' + pos +'"  src="./img/cards/'+ (cards[pos].rank + 1) + '_of_' + cards[pos].color + '.png"/>';
@@ -110,16 +110,21 @@ lg.gameEngine = new function(){
 		var i = cards.length - 1;
 		var pos = 0;
 		if(i >= 0){
-			if(i % 4 === 0) {
+			if((i + 3) % 4 === 0) {
 				$(middleCardsContents[i]).animate({
 					bottom: '5px',
 					opacity: 0
 				}, drawCardSpeed, function(){
 					pos = players[0].insertCards(playDeckObj.releaseCard());
 					displayPlayerCards(players[0].getCards(), pos);
+					$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
+					var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
+					var my_css_class = { 'margin-left': margin };
+					$('.bottomContent .cardsInHand:not(:first-of-type)').css(my_css_class);
 					drawCards(players, playDeckObj)
+
 				});
-			} else if(i % 4 === 1) {
+			} else if((i + 3) % 4 === 1) {
 				$(middleCardsContents[i]).animate({
 					left: '5px',
 					opacity: 0
@@ -128,7 +133,7 @@ lg.gameEngine = new function(){
 					displayLeftCards(players[1].getCards(), pos);
 					drawCards(players, playDeckObj)
 				});
-			} else if(i % 4 === 2) {
+			} else if((i + 3) % 4 === 2) {
 				$(middleCardsContents[i]).animate({
 					top: '50px',
 					opacity: 0
@@ -162,9 +167,9 @@ lg.gameEngine = new function(){
 		for(i = 0; i < numofPlayer; i++) {
 			players[i] = new player();
 		}
-		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
-
+		
 		displayCenterCards(cards);
+		
 
 		
 		/*for(i = 0; i < len; i++) {
