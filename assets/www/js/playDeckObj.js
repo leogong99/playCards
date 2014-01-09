@@ -30,6 +30,8 @@ var playDeckObj = new function(){
 				}
 			}
 		}
+		this.shuffleCard();
+		return this.deckCard;
 	};
 
 	var swapArrayElement = function(arr, c1, c2) {
@@ -48,4 +50,7 @@ var playDeckObj = new function(){
 	this.releaseCard = function() {
 		return this.deckCard.pop();
 	};
+	this.getNumofCardsLeft = function() {
+		return this.deckCard.length;
+	}
 };
