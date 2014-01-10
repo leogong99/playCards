@@ -2,7 +2,7 @@ lg.gameEngine = new function(){
 	'use strict'
 
 	var buildPlayerCardStr = function(card) {
-		var myCards = '<li class="cardsInHand">';
+		var myCards = '<li data-card="' + card.rank + '_' + card.color + '" class="cardsInHand">';
 		myCards += '<img src="./img/cards/'+ (card.rank + 1) + '_of_' + card.color + '.png"/>';
 		myCards += '</li>';
 		return myCards;
@@ -38,7 +38,8 @@ lg.gameEngine = new function(){
 	var displayTopCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var margin = (rowWidth - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildBackCardStr('cardsInHand');
@@ -51,7 +52,8 @@ lg.gameEngine = new function(){
 	var displayLeftCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var margin = (rowHeight - cardWidth)/ 13 - cardWidth  +'px';
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var margin = (rowHeight - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildBackCardStr('cardsInSide');
@@ -64,7 +66,8 @@ lg.gameEngine = new function(){
 	var displayRightCards = function(cards, pos) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var margin = (rowHeight - cardWidth)/ 13 - cardWidth  +'px';
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var margin = (rowHeight - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildBackCardStr('cardsInSide');
@@ -87,9 +90,10 @@ lg.gameEngine = new function(){
 
 	var drawPlayerCardsCallBack = function(player, playDeckObj) {
 		var pos = player.insertCards(playDeckObj.releaseCard());
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
 		displayPlayerCards(player.getCards(), pos);
 		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
-		var margin = (rowWidth - cardWidth)/ 13 - cardWidth  +'px';
+		var margin = (rowWidth - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 		var my_css_class = { 'margin-left': margin };
 		$('.bottomContent .cardsInHand:not(:first-of-type)').css(my_css_class);
 	};
@@ -100,7 +104,8 @@ lg.gameEngine = new function(){
 		var cards = playDeckObj.getDeckCard();
 		var i = cards.length - 1;
 		var pos = 0;
-		if(i >= 0){
+
+		if(i >= cardsLeft){
 			if((i + firstPlayer) % numofPlayer === 0) {
 				$(middleCardsContents[i]).animate({
 					bottom: '5px',
@@ -146,15 +151,16 @@ lg.gameEngine = new function(){
 	var assignEventListener = function() {
 		var selectCard = [];
 		$('.bottomContent .cardsInHand').on('click', function(){
-			if(selectCard.indexOf(this) < 0) {
+			var card = $(this).data('card');
+			if(selectCard.indexOf(card) < 0) {
 				$(this).css('margin-top', '-30px');
-				$(selectCard).css('margin-top', '0px');
-				selectCard.push($.extend({}, this));
+				selectCard.push(card);
 			} else {
 				$(selectCard).css('margin-top', '0px');
-				var inx = shuffleCard.indexOf(this);
+				var inx = selectCard.indexOf(card);
 				if(inx > -1) {
-					selectCard = selectCard.splice(inx, 1);
+					selectCard.splice(inx, 1);
+					$(this).css('margin-top', '0px');
 				}
 			}
 			

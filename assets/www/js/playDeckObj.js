@@ -1,14 +1,24 @@
-var NUMOFCARDSINONESET = 52;
-var NUMOFJOKERINONESET = 2;
-var COLORFORCARDS = ['hearts', 'spades', 'clubs', 'diamonds'];
-var COLORFORJOKERS = ['black', 'red'];
+
 var playDeckObj = new function(){
 	'use strict'
 	this.deckCard = [];
 	this.isIncludeJoker = true;
 	this.numOfSet = 0;
 	
-	
+	this.shuffleRegularCard = function(numofColors){
+		for(var n = 0; n < NUMOFCARDSINONESET; n++) {
+			var card = new playCardObj();
+			card.initial(parseInt(n/numofColors), COLORFORCARDS[n%numofColors]);
+			this.deckCard.push(card);
+		}
+	};
+	this.shuffleJokerCard = function(numofJokers){
+		for(var n = 0; n < NUMOFJOKERINONESET; n++) {
+			var joker = new playCardObj();
+			joker.initial(14 + n, COLORFORJOKERS[n%numofJokers]);
+			this.deckCard.push(joker);
+		}
+	};
 	this.init = function(sets, isIncludeJoker) {
 		var m = 0,
 			n = 0,
@@ -17,17 +27,9 @@ var playDeckObj = new function(){
 		//setup each set
 		for(m = 0; m < sets; m++) {
 			//setup each card in one set
-			for(n = 0; n < NUMOFCARDSINONESET; n++) {
-				var card = new playCardObj();
-				card.initial(parseInt(n/numofColors), COLORFORCARDS[n%numofColors]);
-				this.deckCard.push(card);
-			}
+			this.shuffleRegularCard(numofColors);
 			if(isIncludeJoker) {
-				for(n = 0; n < NUMOFJOKERINONESET; n++) {
-					var joker = new playCardObj();
-					joker.initial(14 + n, COLORFORJOKERS[n%numofJokers]);
-					this.deckCard.push(joker);
-				}
+				this.shuffleJokerCard(numofJokers);
 			}
 		}
 		this.shuffleCard();

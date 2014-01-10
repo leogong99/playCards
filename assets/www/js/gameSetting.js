@@ -8,3 +8,8 @@ var lg = lg || {},
 	firstPlayer = 3,
 	cardsLeft = 6;
 
+var NUMOFCARDSINONESET = 52;
+var NUMOFJOKERINONESET = 2;
+var COLORFORCARDS = ['hearts', 'spades', 'clubs', 'diamonds'];
+var COLORFORJOKERS = ['black', 'red'];
+
