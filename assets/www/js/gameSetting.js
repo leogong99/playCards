@@ -8,7 +8,8 @@ var lg = lg || {},
 	firstPlayer = 3,
 	mainPlayer = 3,
 	cardsLeft = 8,
-	numSetofCards = 2;
+	numSetofCards = 2,
+	waitForRemainTimer = 500;
 
 
 var NUMOFCARDSINONESET = 52;

@@ -201,7 +201,9 @@ lg.gameEngine = new function(){
 			}
 
 		} else {
-			drawRemainCards(players, playDeckObj);
+			setTimeout(function(){
+				drawRemainCards(players, playDeckObj)
+			}, waitForRemainTimer);
 			assignEventListener();
 		}
 
