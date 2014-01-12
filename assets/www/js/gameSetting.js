@@ -6,7 +6,10 @@ var lg = lg || {},
 	rowHeight = ($(window).height() - cardHeight * 2 - 53) * 0.8,
 	drawCardSpeed = 100,
 	firstPlayer = 3,
-	cardsLeft = 6;
+	mainPlayer = 3,
+	cardsLeft = 8,
+	numSetofCards = 2;
+
 
 var NUMOFCARDSINONESET = 52;
 var NUMOFJOKERINONESET = 2;

@@ -24,10 +24,10 @@ lg.gameEngine = new function(){
 
 	var buildBackCardStr = function(className) {
 		var cardImg = '';
-		if(className == 'cardsInHand') {
-			cardImg = 'cardBack1.png';
-		} else {
+		if(className == 'cardsInSide') {
 			cardImg = 'cardBack2.png';
+		} else {
+			cardImg = 'cardBack1.png';
 		}
 		var myCards = '<li class="'+ className +'">';
 		myCards += '<img src="./img/cards/' + cardImg + '"/>';
@@ -35,10 +35,14 @@ lg.gameEngine = new function(){
 		return myCards;
 	}
 
-	var displayTopCards = function(cards, pos) {
+	var displayTopCards = function(cards, pos, isRemain) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET  * numSetofCards - cardsLeft) / numofPlayer);
+		if(isRemain) {
+			numofCardsPerPlayer += cardsLeft;
+		}
 		var margin = (rowWidth - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
@@ -49,10 +53,13 @@ lg.gameEngine = new function(){
 		$('.topContent .cardsInHand:not(:first-of-type)').css('margin-left', margin);
 	};
 
-	var displayLeftCards = function(cards, pos) {
+	var displayLeftCards = function(cards, pos, isRemain) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET  * numSetofCards - cardsLeft) / numofPlayer);
+		if(isRemain) {
+			numofCardsPerPlayer += cardsLeft;
+		}
 		var margin = (rowHeight - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
@@ -63,10 +70,13 @@ lg.gameEngine = new function(){
 		$('.leftContent .cardsInSide:not(:first-of-type)').css('margin-top', margin);
 	};
 
-	var displayRightCards = function(cards, pos) {
+	var displayRightCards = function(cards, pos, isRemain) {
 		var myCards = '';
 		var numberOfCards = cards.length;
-		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET  * numSetofCards - cardsLeft) / numofPlayer);
+		if(isRemain) {
+			numofCardsPerPlayer += cardsLeft;
+		}
 		var margin = (rowHeight - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 
 		for(var i = 0; i < numberOfCards; i++){
@@ -88,14 +98,61 @@ lg.gameEngine = new function(){
 		$('.centerContent .cardsInMiddle').css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2});
 	};
 
-	var drawPlayerCardsCallBack = function(player, playDeckObj) {
+	var drawPlayerCardsCallBack = function(player, playDeckObj, isRemain) {
 		var pos = player.insertCards(playDeckObj.releaseCard());
-		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET - cardsLeft) / numofPlayer);
+		var numofCardsPerPlayer = Math.round((NUMOFCARDSINONESET  * numSetofCards - cardsLeft) / numofPlayer);
+		if(isRemain) {
+			numofCardsPerPlayer += cardsLeft;
+		}
 		displayPlayerCards(player.getCards(), pos);
 		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
 		var margin = (rowWidth - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 		var my_css_class = { 'margin-left': margin };
 		$('.bottomContent .cardsInHand:not(:first-of-type)').css(my_css_class);
+	};
+	var drawRemainCards = function(players, playDeckObj) {
+		var middleCardsContents = $('.centerContent .cardsInMiddle');
+		var remainCards = playDeckObj.getDeckCard();
+		var i = remainCards.length - 1;
+		var pos = 0;
+		if(remainCards.length > 0) {
+			if((mainPlayer + 1) % numofPlayer === 0) {
+				$(middleCardsContents[i]).animate({
+					bottom: '5px',
+					opacity: 0
+				}, drawCardSpeed, function(){
+					drawPlayerCardsCallBack(players[0], playDeckObj, true);
+					drawRemainCards(players, playDeckObj);
+				});
+			} else if((mainPlayer + 1) % numofPlayer === 1) {
+				$(middleCardsContents[i]).animate({
+					left: '5px',
+					opacity: 0
+				}, drawCardSpeed, function(){
+					pos = players[1].insertCards(playDeckObj.releaseCard());
+					displayLeftCards(players[1].getCards(), pos, true);
+					drawRemainCards(players, playDeckObj);
+				});
+			} else if((mainPlayer + 1) % numofPlayer === 2) {
+				$(middleCardsContents[i]).animate({
+					top: '50px',
+					opacity: 0
+				}, drawCardSpeed, function(){
+					pos = players[2].insertCards(playDeckObj.releaseCard());
+					displayTopCards(players[2].getCards(), pos, true);
+					drawRemainCards(players, playDeckObj);
+				});
+			} else {
+				$(middleCardsContents[i]).animate({
+					right: '5px',
+					opacity: 0
+				}, drawCardSpeed, function(){
+					pos = players[3].insertCards(playDeckObj.releaseCard());
+					displayRightCards(players[3].getCards(), pos, true);
+					drawRemainCards(players, playDeckObj);
+				});
+			}
+		}
 	};
 
 	var drawCards = function(players, playDeckObj) {
@@ -144,6 +201,7 @@ lg.gameEngine = new function(){
 			}
 
 		} else {
+			drawRemainCards(players, playDeckObj);
 			assignEventListener();
 		}
 
@@ -167,7 +225,7 @@ lg.gameEngine = new function(){
 		});
 	};
 	var initGame = function() {
-		playDeckObj.init(1, true);
+		playDeckObj.init(numSetofCards, true);
 		playDeckObj.shuffleCard();
 		var cards = playDeckObj.getDeckCard();
 		var players = [];
