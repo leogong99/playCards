@@ -182,7 +182,7 @@ lg.gameEngine = new function(){
 				});
 			} else if((i + firstPlayer) % numofPlayer === 2) {
 				$(middleCardsContents[i]).animate({
-					top: '50px',
+					top: '5px',
 					opacity: 0
 				}, drawCardSpeed, function(){
 					pos = players[2].insertCards(playDeckObj.releaseCard());
