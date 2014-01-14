@@ -10,8 +10,11 @@
 #gamePage.gamePageContent{
 	min-height: 90%;
 }
-.hidden {
-	display: hidden;
+.ui-mobile .hidden {
+	display: none;
+}
+.ui-mobile .ui-content{
+	padding: 0px;
 }
 .topContent {
 	position: absolute;
@@ -39,37 +42,37 @@
 	display: block;
 }
 .cardsInHand img{
-	width: 70px;
+	width: 120px;
 }
 .cardsInSide{
 	left: 0px;
 	display: block;
 }
 .cardsInSide img{
-	height: 70px;
+	height: 120px;
 }
 .cardsInMiddle{
 	position: absolute;
 }
 .cardsInTop{
-	width: 70px;
+	width: 120px;
 	position: absolute;
 	top: 0px;
 }
 .cardsInLeft{
-	width: 70px;
+	width: 120px;
 	display: block;
 	position: absolute;
 	left: 0px;
 }
 .cardsInRight{
-	width: 70px;
+	width: 120px;
 	position: absolute;
 	display: block;
 	right: 0px;
 }
 .cardsInMiddle img{
-	width: 70px;
+	width: 120px;
 	position: absolute;
 	display: inline;
 	margin: auto;

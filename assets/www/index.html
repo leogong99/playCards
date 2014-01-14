@@ -28,9 +28,10 @@
         <title>Play Cards</title>
     </head>
     <body>
-            <div id="gamePage" class ="gamePageContent" data-role="page" class="hidden">
-                <div data-role="content" class="startBackground">
-                    <a id="gameStartBtn" href="#gamePage" data-role="button" data-theme="c" data-inline="true">Start Game</a>
+            <div class ="gamePageContent" data-role="page">
+                <a id="gameStartBtn" data-role="button" data-theme="c" data-inline="true">Start Game</a>
+                <div id="gamePage" data-role="content" class="startBackground hidden">
+                    
                     <!--div data-role="header" data-theme="b" data-position="fixed"> 
                         <h1>Cards</h1> 
                     </div-->
@@ -61,6 +62,7 @@
         <script TYPE="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
         <script TYPE="text/javascript" src="js/underscore.js"></script>
         <script type="text/javascript" src="js/gameSetting.js"></script>
+        <script type="text/javascript" src="js/gameStart.js"></script>
         <script type="text/javascript" src="js/playCardObj.js"></script>
         <script type="text/javascript" src="js/playDeckObj.js"></script>
         <script type="text/javascript" src="js/player.js"></script>

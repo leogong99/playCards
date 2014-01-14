@@ -1,6 +1,6 @@
 var lg = lg || {},
-	cardWidth = 70,
-	cardHeight = 102,
+	cardWidth = 120,
+	cardHeight = 150,
 	numofPlayer = 4,
 	rowWidth = $(window).width() * 0.8,
 	rowHeight = ($(window).height() - cardHeight * 2 - 53) * 0.8,
@@ -8,7 +8,7 @@ var lg = lg || {},
 	firstPlayer = 3,
 	mainPlayer = 3,
 	cardsLeft = 8,
-	numSetofCards = 2,
+	numSetofCards = 1,
 	waitForRemainTimer = 500;
 
 
