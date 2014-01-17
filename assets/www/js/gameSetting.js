@@ -7,7 +7,7 @@ var lg = lg || {},
 	drawCardSpeed = 100,
 	firstPlayer = 3,
 	mainPlayer = 3,
-	cardsLeft = 8,
+	cardsLeft = 0,
 	numSetofCards = 1,
 	waitForRemainTimer = 500;
 

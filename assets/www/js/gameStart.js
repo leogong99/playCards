@@ -152,6 +152,8 @@ lg.gameStart = new function(){
 					drawRemainCards(players, playDeckObj);
 				});
 			}
+		} else {
+			assignEventListener();
 		}
 	};
 
@@ -202,9 +204,8 @@ lg.gameStart = new function(){
 
 		} else {
 			setTimeout(function(){
-				drawRemainCards(players, playDeckObj)
+				drawRemainCards(players, playDeckObj);
 			}, waitForRemainTimer);
-			assignEventListener();
 		}
 
 	};
@@ -239,7 +240,6 @@ lg.gameStart = new function(){
 			}
 			displayCenterCards(cards);
 			drawCards(players, playDeckObj);
-			assignEventListener();
 		}
 	}
 };
