@@ -154,6 +154,7 @@ lg.gameStart = new function(){
 			}
 		} else {
 			assignEventListener();
+			startPlay(players);
 		}
 	};
 
@@ -224,10 +225,23 @@ lg.gameStart = new function(){
 					$(this).css('margin-top', '0px');
 				}
 			}
+			if(selectCard.length > 0) {
+				$('#callButton').removeClass('hidden');
+			} else {
+				$('#callButton').addClass('hidden');
+			}
 			
 		});
 	};
-	
+
+	var startPlay = function() {
+		while(isGameFinished) {
+			if(gamePlayTurn !== 0) {
+				players[gamePlayTurn].aiPlay();
+			}
+		}
+	};
+
 	return {
 		start: function() {
 			playDeckObj.init(numSetofCards, true);

@@ -9,7 +9,9 @@ var lg = lg || {},
 	mainPlayer = 3,
 	cardsLeft = 0,
 	numSetofCards = 1,
-	waitForRemainTimer = 500;
+	waitForRemainTimer = 500,
+	isGameFinished = false,
+	gamePlayTurn = 0;
 
 
 var NUMOFCARDSINONESET = 52;

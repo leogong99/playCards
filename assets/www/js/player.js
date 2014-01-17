@@ -27,3 +27,7 @@ player.prototype.insertCards = function(card) {
 player.prototype.getCards = function() {
 	return this.cardsInHands;
 };
+
+player.prototype.aiPlay = function() {
+
+};
