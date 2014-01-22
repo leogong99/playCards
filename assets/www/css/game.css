@@ -23,7 +23,7 @@
 }
 .bottomContent {
 	position: absolute;
-	bottom: 10px;
+	bottom: 0px;
 	left: 0px;
 }
 .leftContent {
@@ -55,24 +55,24 @@
 	position: absolute;
 }
 .cardsInTop{
-	width: 120px;
+	width: 100px;
 	position: absolute;
 	top: 0px;
 }
 .cardsInLeft{
-	width: 120px;
+	width: 100px;
 	display: block;
 	position: absolute;
 	left: 0px;
 }
 .cardsInRight{
-	width: 120px;
+	width: 100px;
 	position: absolute;
 	display: block;
 	right: 0px;
 }
 .cardsInMiddle img{
-	width: 120px;
+	width: 100px;
 	position: absolute;
 	display: inline;
 	margin: auto;
@@ -102,4 +102,7 @@
 }
 .bottomListContent{
 	list-style: none;
-} 
+}
+.callBtn{
+	margin-top: -86px;
+}
