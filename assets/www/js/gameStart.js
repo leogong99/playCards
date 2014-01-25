@@ -115,38 +115,42 @@ lg.gameStart = new function(){
 		var remainCards = playDeckObj.getDeckCard();
 		var i = remainCards.length - 1;
 		var pos = 0;
+		var animateBottomObj = {
+				bottom: '5px',
+				opacity: 0
+			};
+		var animateLeftObj = {
+				left: '5px',
+				opacity: 0
+			};
+		var animateTopObj = {
+				top: '5px',
+				opacity: 0
+			};
+		var animateRightObj = {
+				right: '5px',
+				opacity: 0
+			};
 		if(remainCards.length > 0) {
 			if((mainPlayer + 1) % numofPlayer === 0) {
-				$(middleCardsContents[i]).animate({
-					bottom: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateBottomObj, drawCardSpeed, function(){
 					drawPlayerCardsCallBack(players[0], playDeckObj, true);
 					drawRemainCards(players, playDeckObj);
 				});
 			} else if((mainPlayer + 1) % numofPlayer === 1) {
-				$(middleCardsContents[i]).animate({
-					left: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateLeftObj, drawCardSpeed, function(){
 					pos = players[1].insertCards(playDeckObj.releaseCard());
 					displayLeftCards(players[1].getCards(), pos, true);
 					drawRemainCards(players, playDeckObj);
 				});
 			} else if((mainPlayer + 1) % numofPlayer === 2) {
-				$(middleCardsContents[i]).animate({
-					top: '50px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateTopObj, drawCardSpeed, function(){
 					pos = players[2].insertCards(playDeckObj.releaseCard());
 					displayTopCards(players[2].getCards(), pos, true);
 					drawRemainCards(players, playDeckObj);
 				});
 			} else {
-				$(middleCardsContents[i]).animate({
-					right: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateRightObj, drawCardSpeed, function(){
 					pos = players[3].insertCards(playDeckObj.releaseCard());
 					displayRightCards(players[3].getCards(), pos, true);
 					drawRemainCards(players, playDeckObj);
@@ -164,45 +168,49 @@ lg.gameStart = new function(){
 		var cards = playDeckObj.getDeckCard();
 		var i = cards.length - 1;
 		var pos = 0;
+		var animateBottomObj = {
+				bottom: '5px',
+				opacity: 0
+			};
+		var animateLeftObj = {
+				left: '5px',
+				opacity: 0
+			};
+		var animateTopObj = {
+				top: '5px',
+				opacity: 0
+			};
+		var animateRightObj = {
+				right: '5px',
+				opacity: 0
+			};
 
 		if(i >= cardsLeft){
 			if((i + firstPlayer) % numofPlayer === 0) {
-				$(middleCardsContents[i]).animate({
-					bottom: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateBottomObj, drawCardSpeed, function(){
 					drawPlayerCardsCallBack(players[0], playDeckObj);
 					drawCards(players, playDeckObj);
 				});
 			} else if((i + firstPlayer) % numofPlayer === 1) {
-				$(middleCardsContents[i]).animate({
-					left: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateLeftObj, drawCardSpeed, function(){
 					pos = players[1].insertCards(playDeckObj.releaseCard());
 					displayLeftCards(players[1].getCards(), pos);
 					drawCards(players, playDeckObj);
 				});
 			} else if((i + firstPlayer) % numofPlayer === 2) {
-				$(middleCardsContents[i]).animate({
-					top: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateTopObj, drawCardSpeed, function(){
 					pos = players[2].insertCards(playDeckObj.releaseCard());
 					displayTopCards(players[2].getCards(), pos);
 					drawCards(players, playDeckObj);
 				});
 			} else {
-				$(middleCardsContents[i]).animate({
-					right: '5px',
-					opacity: 0
-				}, drawCardSpeed, function(){
+				lg.gameAnimation.drawCards(middleCardsContents[i], animateRightObj, drawCardSpeed, function(){
 					pos = players[3].insertCards(playDeckObj.releaseCard());
 					displayRightCards(players[3].getCards(), pos);
 					drawCards(players, playDeckObj);
 				});
 			}
-
+			
 		} else {
 			setTimeout(function(){
 				drawRemainCards(players, playDeckObj);
