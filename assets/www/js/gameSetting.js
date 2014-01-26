@@ -4,7 +4,7 @@ var lg = lg || {},
 	numofPlayer = 4,
 	rowWidth = $(window).width() - cardHeight * 2,
 	rowHeight = $(window).height() - cardHeight * 2,
-	drawCardSpeed = 100,
+	drawCardSpeed = 1000,
 	firstPlayer = 3,
 	mainPlayer = 3,
 	cardsLeft = 0,
@@ -13,6 +13,22 @@ var lg = lg || {},
 	isGameFinished = false,
 	gamePlayTurn = 0;
 
+var animateBottomObj = {
+		bottom: '5px',
+		opacity: 0
+	};
+var animateLeftObj = {
+		left: '5px',
+		opacity: 0
+	};
+var animateTopObj = {
+		top: '5px',
+		opacity: 0
+	};
+var animateRightObj = {
+		right: '5px',
+		opacity: 0
+	};
 
 var NUMOFCARDSINONESET = 52;
 var NUMOFJOKERINONESET = 2;

@@ -115,22 +115,7 @@ lg.gameStart = new function(){
 		var remainCards = playDeckObj.getDeckCard();
 		var i = remainCards.length - 1;
 		var pos = 0;
-		var animateBottomObj = {
-				bottom: '5px',
-				opacity: 0
-			};
-		var animateLeftObj = {
-				left: '5px',
-				opacity: 0
-			};
-		var animateTopObj = {
-				top: '5px',
-				opacity: 0
-			};
-		var animateRightObj = {
-				right: '5px',
-				opacity: 0
-			};
+		
 		if(remainCards.length > 0) {
 			if((mainPlayer + 1) % numofPlayer === 0) {
 				lg.gameAnimation.drawCards(middleCardsContents[i], animateBottomObj, drawCardSpeed, function(){
@@ -168,22 +153,6 @@ lg.gameStart = new function(){
 		var cards = playDeckObj.getDeckCard();
 		var i = cards.length - 1;
 		var pos = 0;
-		var animateBottomObj = {
-				bottom: '5px',
-				opacity: 0
-			};
-		var animateLeftObj = {
-				left: '5px',
-				opacity: 0
-			};
-		var animateTopObj = {
-				top: '5px',
-				opacity: 0
-			};
-		var animateRightObj = {
-				right: '5px',
-				opacity: 0
-			};
 
 		if(i >= cardsLeft){
 			if((i + firstPlayer) % numofPlayer === 0) {
