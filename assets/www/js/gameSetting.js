@@ -4,17 +4,17 @@ var lg = lg || {},
 	numofPlayer = 4,
 	rowWidth = $(window).width() - cardHeight * 2,
 	rowHeight = $(window).height() - cardHeight * 2,
-	drawCardSpeed = 1000,
+	drawCardSpeed = 100,
 	firstPlayer = 3,
 	mainPlayer = 3,
-	cardsLeft = 0,
+	cardsLeft = 6,
 	numSetofCards = 1,
 	waitForRemainTimer = 500,
 	isGameFinished = false,
 	gamePlayTurn = 0;
 
 var animateBottomObj = {
-		bottom: '5px',
+		top: $(window).height() - cardHeight - 5 + 'px',
 		opacity: 0
 	};
 var animateLeftObj = {
@@ -26,7 +26,7 @@ var animateTopObj = {
 		opacity: 0
 	};
 var animateRightObj = {
-		right: '5px',
+		left: $(window).width() - cardHeight - 5 + 'px',
 		opacity: 0
 	};
 
