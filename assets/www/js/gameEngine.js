@@ -4,7 +4,7 @@ lg.gameEngine = new function(){
 		$('#gameStartBtn').addClass('hidden');
 		$('#gamePage').removeClass('hidden');
 		lg.gameStart.start();
-	}
+	};
 
 	return {
 		start: function() {

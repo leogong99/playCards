@@ -31,3 +31,6 @@ player.prototype.getCards = function() {
 player.prototype.aiPlay = function() {
 
 };
+player.prototype.removeCards = function(cards){
+	this.cardsInHands = _.without(this.cardsInHands, cards);
+};

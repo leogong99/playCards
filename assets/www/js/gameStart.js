@@ -1,8 +1,8 @@
 lg.gameStart = new function(){
 	'use strict'
 
-	var buildPlayerCardStr = function(card) {
-		var myCards = '<li data-card="' + card.rank + '_' + card.color + '" class="cardsInHand">';
+	var buildPlayerCardStr = function(card, className) {
+		var myCards = '<li data-cardrank="' + card.rank + '" data-cardcolor="' + card.color + '" class="' + className + '">';
 		myCards += '<img src="./img/cards/'+ (card.rank + 1) + '_of_' + card.color + '.png"/>';
 		myCards += '</li>';
 		return myCards;
@@ -12,7 +12,7 @@ lg.gameStart = new function(){
 		var myCards = '';
 		var numberOfCards = cards.length;
 
-		myCards = buildPlayerCardStr(cards[pos]);
+		myCards = buildPlayerCardStr(cards[pos], 'cardsInHand');
 		if($('.bottomContent .cardsInHand').length === 0) {
 			$('.bottomContent .cardContent').html(myCards);
 		} else if (pos === 0) {
@@ -21,7 +21,12 @@ lg.gameStart = new function(){
 			$(myCards).insertAfter('.bottomContent .cardsInHand:nth-child(' + pos + ')');
 		}
 	};
-
+	var removePlayerCards = function(removeCards) {
+		for(var i = 0; i < removeCards.length; i++) {
+			$(removeCards[i]).remove();
+		}
+		
+	};
 	var buildBackCardStr = function(className) {
 		var cardImg = '';
 		if(className == 'cardsInSide') {
@@ -86,6 +91,16 @@ lg.gameStart = new function(){
 		$('.rightContent').css('padding-top',  (cardHeight + 15) + 'px');
 		$('.rightContent .cardsInSide:not(:first-of-type)').css('margin-top', margin);
 	};
+	var displayCenterPlayedCards = function(cards) {
+		var myCards = '';
+		var numberOfCards = cards.length;
+
+		for(var i = 0; i < numberOfCards; i++){
+			myCards += buildPlayerCardStr(cards[i], 'cardsInMiddle');
+		}
+		$('.centerContent').html(myCards);
+		$('.centerContent li').css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2});
+	};
 
 	var displayCenterCards = function(cards) {
 		var myCards = '';
@@ -110,6 +125,7 @@ lg.gameStart = new function(){
 		var my_css_class = { 'margin-left': margin };
 		$('.bottomContent .cardsInHand:not(:first-of-type)').css(my_css_class);
 	};
+
 	var drawRemainCards = function(players, playDeckObj) {
 		var middleCardsContents = $('.centerContent .cardsInMiddle');
 		var remainCards = playDeckObj.getDeckCard();
@@ -142,8 +158,7 @@ lg.gameStart = new function(){
 				});
 			}
 		} else {
-			assignEventListener();
-			startPlay(players);
+			assignEventListener(players);
 		}
 	};
 
@@ -187,18 +202,24 @@ lg.gameStart = new function(){
 		}
 
 	};
-	var assignEventListener = function() {
+	var assignEventListener = function(players) {
 		var selectCard = [];
+		var selectCardsDom = [];
 		$('.bottomContent .cardsInHand').on('click', function(){
-			var card = $(this).data('card');
+			var card = {
+				rank: $(this).data('cardrank'),
+				color: $(this).data('cardcolor')
+			}
 			if(selectCard.indexOf(card) < 0) {
 				$(this).css('margin-top', '-30px');
 				selectCard.push(card);
+				selectCardsDom.push($(this));
 			} else {
 				$(selectCard).css('margin-top', '0px');
 				var inx = selectCard.indexOf(card);
 				if(inx > -1) {
 					selectCard.splice(inx, 1);
+					selectCardsDom.splice(inx, 1);
 					$(this).css('margin-top', '0px');
 				}
 			}
@@ -209,13 +230,21 @@ lg.gameStart = new function(){
 			}
 			
 		});
+		$('#callButton').on('click', function(){
+			players[0].removeCards(selectCard);
+			removePlayerCards(selectCardsDom);
+			currentCardsInTable.push(selectCard);
+			displayCenterPlayedCards(selectCard);
+			gamePlayTurn = 1;
+			aiTurn(players);
+		});
+
 	};
 
-	var startPlay = function() {
-		while(isGameFinished) {
-			if(gamePlayTurn !== 0) {
-				players[gamePlayTurn].aiPlay();
-			}
+	var aiTurn = function(players) {
+		while(gamePlayTurn !== 0) {
+			players[gamePlayTurn].aiPlay();
+			gamePlayTurn = (gamePlayTurn == numofPlayer - 1) ? 0 : (gamePlayTurn + 1);
 		}
 	};
 
@@ -231,6 +260,7 @@ lg.gameStart = new function(){
 			}
 			displayCenterCards(cards);
 			drawCards(players, playDeckObj);
+
 		}
 	}
 };
