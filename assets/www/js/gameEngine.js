@@ -16,9 +16,8 @@ lg.gameEngine = new function(){
 	};
 
 	var _playerTurn = function(players, selectCard) {
-		
+		_sortCardsonTable(selectCard);
 		_setCardsonTable(selectCard);
-		_sortCardsonTable();
 		players[currentTurn].removeCards(selectCard);
 		while(currentTurn !== 0) {
 			players[currentTurn].aiPlay();
@@ -26,8 +25,10 @@ lg.gameEngine = new function(){
 		}
 	};
 
-	var _sortCardsonTable = function() {
-		cardsonTable =  _.sortBy(cardsonTable, function(card){
+	
+
+	var _sortCardsonTable = function(selectCard) {
+		selectCard =  _.sortBy(selectCard, function(card){
 			return card.rank * -1;
 		})
 	};
