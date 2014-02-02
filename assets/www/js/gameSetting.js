@@ -13,8 +13,6 @@ var lg = lg || {},
 	isGameFinished = false,
 	gamePlayTurn = 0;
 
-var currentCardsInTable = [];
-
 var animateBottomObj = {
 		top: $(window).height() - cardHeight - 5 + 'px',
 		opacity: 0

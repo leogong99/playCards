@@ -94,7 +94,7 @@ lg.gameStart = new function(){
 		var myCards = '';
 		var numberOfCards = cards.length;
 
-		for(var i = 0; i < numberOfCards; i++){
+		for(var i = numberOfCards - 1; i >= 0; i--){
 			myCards += buildPlayerCardStr(cards[i], 'cardsInMiddle');
 		}
 		$('.centerContent ul').empty().html(myCards);
@@ -232,24 +232,18 @@ lg.gameStart = new function(){
 			
 		});
 		$('#callButton').on('click', function(){
-			players[0].removeCards(selectCard);
+			//players[0].removeCards(selectCard);
+			lg.gameEngine.playerTurn(players, selectCard);
 			removePlayerCards(selectCardsDom);
-			currentCardsInTable.push(selectCard);
-			displayCenterPlayedCards(selectCard);
+
+			displayCenterPlayedCards(lg.gameEngine.getCardsonTable());
 			$('#callButton').addClass('hidden');
-			gamePlayTurn = 1;
-			aiTurn(players);
+			//gamePlayTurn = 1;
+			//aiTurn(players);
 			selectCard = [];
 			selectCardsDom = [];
 		});
 
-	};
-
-	var aiTurn = function(players) {
-		while(gamePlayTurn !== 0) {
-			players[gamePlayTurn].aiPlay();
-			gamePlayTurn = (gamePlayTurn == numofPlayer - 1) ? 0 : (gamePlayTurn + 1);
-		}
 	};
 
 	return {
