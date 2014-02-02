@@ -97,8 +97,11 @@ lg.gameStart = new function(){
 		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildPlayerCardStr(cards[i], 'cardsInMiddle');
 		}
-		$('.centerContent').html(myCards);
-		$('.centerContent li').css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2});
+		$('.centerContent ul').empty().html(myCards);
+		$.each($('.centerContent li'), function(i, val){
+			$(val).css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2 + i * 20});
+		})
+		
 	};
 
 	var displayCenterCards = function(cards) {
@@ -108,7 +111,7 @@ lg.gameStart = new function(){
 		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildBackCardStr('cardsInMiddle');
 		}
-		$('.centerContent').html(myCards);
+		$('.centerContent ul').html(myCards);
 		$('.centerContent .cardsInMiddle').css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2});
 	};
 
@@ -208,8 +211,9 @@ lg.gameStart = new function(){
 				rank: $(this).data('cardrank'),
 				color: $(this).data('cardcolor')
 			}
+			var imgObj = $(this).children()[0];
 			if(isArrayHas(selectCard, card) < 0) {
-				$(this).css('margin-top', '-30px');
+				$(imgObj).css('margin-top', '-30px');
 				selectCard.push(card);
 				selectCardsDom.push($(this));
 			} else {
@@ -217,7 +221,7 @@ lg.gameStart = new function(){
 				if(inx > -1) {
 					selectCard.splice(inx, 1);
 					selectCardsDom.splice(inx, 1);
-					$(this).css('margin-top', '0px');
+					$(imgObj).css('margin-top', '0px');
 				}
 			}
 			if(selectCard.length > 0) {
@@ -232,8 +236,11 @@ lg.gameStart = new function(){
 			removePlayerCards(selectCardsDom);
 			currentCardsInTable.push(selectCard);
 			displayCenterPlayedCards(selectCard);
+			$('#callButton').addClass('hidden');
 			gamePlayTurn = 1;
 			aiTurn(players);
+			selectCard = [];
+			selectCardsDom = [];
 		});
 
 	};
