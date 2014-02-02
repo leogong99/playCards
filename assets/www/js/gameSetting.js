@@ -37,3 +37,11 @@ var NUMOFJOKERINONESET = 2;
 var COLORFORCARDS = ['hearts', 'spades', 'clubs', 'diamonds'];
 var COLORFORJOKERS = ['black', 'red'];
 
+var isArrayHas = function(array, item) {
+	for(var i = 0; i < array.length; i++) {
+		if(_.isEqual(array[i], item)) {
+			return i;
+		}
+	}
+	return -1;
+};

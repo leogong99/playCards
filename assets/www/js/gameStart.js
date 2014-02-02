@@ -54,7 +54,6 @@ lg.gameStart = new function(){
 			myCards += buildBackCardStr('cardsInHand');
 		}
 		$('.topContent .cardContent').html(myCards);
-		$('.topContent').css('padding-left', $(window).width() * 0.1 + 'px');
 		$('.topContent .cardsInHand:not(:first-of-type)').css('margin-left', margin);
 	};
 
@@ -120,7 +119,6 @@ lg.gameStart = new function(){
 			numofCardsPerPlayer += cardsLeft;
 		}
 		displayPlayerCards(player.getCards(), pos);
-		$('.bottomContent').css('padding-left', $(window).width() * 0.1 + 'px');
 		var margin = (rowWidth - cardWidth)/ numofCardsPerPlayer - cardWidth  +'px';
 		var my_css_class = { 'margin-left': margin };
 		$('.bottomContent .cardsInHand:not(:first-of-type)').css(my_css_class);
@@ -210,13 +208,12 @@ lg.gameStart = new function(){
 				rank: $(this).data('cardrank'),
 				color: $(this).data('cardcolor')
 			}
-			if(selectCard.indexOf(card) < 0) {
+			if(isArrayHas(selectCard, card) < 0) {
 				$(this).css('margin-top', '-30px');
 				selectCard.push(card);
 				selectCardsDom.push($(this));
 			} else {
-				$(selectCard).css('margin-top', '0px');
-				var inx = selectCard.indexOf(card);
+				var inx = isArrayHas(selectCard, card);
 				if(inx > -1) {
 					selectCard.splice(inx, 1);
 					selectCardsDom.splice(inx, 1);

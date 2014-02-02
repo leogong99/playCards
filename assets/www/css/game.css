@@ -20,11 +20,13 @@
 	position: absolute;
 	top: 5px;
 	left: 0px;
+	width: 100%;
 }
 .bottomContent {
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
+	width: 100%
 }
 .leftContent {
 	position: absolute;
@@ -82,6 +84,7 @@
 	margin: auto;
 	padding: 0;
 	zoom: 1;
+	text-align: center;
 }
 .middleContent{
 	position: absolute;
@@ -102,6 +105,7 @@
 }
 .bottomListContent{
 	list-style: none;
+	text-align: center;
 }
 .callBtn{
 	top:-50px;
