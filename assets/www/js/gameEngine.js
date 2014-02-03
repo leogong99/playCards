@@ -17,15 +17,18 @@ lg.gameEngine = new function(){
 
 	var _playerTurn = function(players, selectCard) {
 		_sortCardsonTable(selectCard);
-		_setCardsonTable(selectCard);
-		players[currentTurn].removeCards(selectCard);
-		while(currentTurn !== 0) {
-			players[currentTurn].aiPlay();
-			currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
+		if(cardsonTable.length === 0 && lg.gameRules.isValidFirstPlay(selectCard)) {
+			_setCardsonTable(selectCard);
+			players[currentTurn].removeCards(selectCard);
+			while(currentTurn !== 0) {
+				players[currentTurn].aiPlay();
+				currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
+			}
+			return true;
+		} else {
+			return false;
 		}
 	};
-
-	
 
 	var _sortCardsonTable = function(selectCard) {
 		selectCard =  _.sortBy(selectCard, function(card){

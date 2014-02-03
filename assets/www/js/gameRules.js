@@ -1,28 +1,16 @@
 lg.gameRules = new function(){
 	var _isValidSingle = function(selectCard) {
-		if(cardsonTableLength === 0) {
-			return true;
-		} else if(cardsonTableLength === 1) {
-			return selectCard[0].rank > cardsonTable[0].rank;
-		} else {
-			return false;
-		}
+		return selectCard.length === 1;
 	};
 
 	var _isValidPair = function(selectCard) {
-		if(cardsonTableLength === 0) {
-			return true;
-		} else if(selectCardLength !== cardsonTableLength) {
-			return false;
-		} else {
-			return selectCard[0].rank > cardsonTable[0].rank;
-		}
+		var selectCardLength = selectCard.length;
+		return selectCardLength > 1 && selectCard[0].rank === selectCard[selectCardLength - 1].rank;
 	};
 
 	var _isValidPlane = function(selectCard) {
-		if(cardsonTableLength < 6 || selectCardLength < 6 || cardsonTableLength !== selectCardLength) {
-			return false;
-		} else if (selectCard[0].rank <= cardsonTable[0].rank) {
+		var selectCardLength = selectCard.length;
+		if(selectCardLength < 6) {
 			return false;
 		} else if(selectCard[0].rank === selectCard[1].rank) {
 			var numofSame = 1;
@@ -46,35 +34,81 @@ lg.gameRules = new function(){
 	};
 
 	var _isValidTriplePlusTwo = function(selectCard) {
-		if(cardsonTableLength !== 5 || selectCardLength !== 5) {
+		var selectCardLength = selectCard.length;
+		if(selectCardLength !== 5) {
 			return false;
-		} else if(selectCard[0].rank !== selectCard[2].rank && selectCard[2].rank !== selectCard[4].rank) {
-			return false;
-		} else if (cardsonTable[0].rank !== cardsonTable[2].rank && cardsonTable[2].rank !== cardsonTable[4].rank) {
-			return false;
-		} else if(cardsonTable[2].rank >= selectCard[2].rank) {
-			return false;
+		} else if(selectCard[0].rank === selectCard[2].rank && selectCard[3].rank == selectCard[4].rank) {
+			return true;
+		} else if(selectCard[2].rank === selectCard[4].rank && selectCard[0].rank == selectCard[1].rank) {
+			return true;
 		}
-		return true;
+		return false;
+	};
+	var _isValidStraight = function(selectCard) {
+		var selectCardLength = selectCard.length;
+		if(selectCardLength < 6) {
+			return false;
+		} else {
+			for(var i = 1; i < selectCardLength; i++) {
+				if(selectCard[i - 1].rank != selectCard[i].rank + 1) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	};
+	var _isValidBomb = function(selectCard) {
+		var selectCardLength = selectCard.length;
+		if(selectCardLength === 4) {
+			if(selectCard[0].rank === selectCard[3].rank) {
+				return true;
+			}
+		} else if(selectCard[0].color == 'black' && selectCard[1].color == 'red'){
+			return true;
+		}
+		return false;
 	}
 
-	var _isValidPlay = function(selectCard) {
+	var _isValidFirstPlay = function(selectCard) {
 		var selectCardLength = selectCard.length;
-		var cardsonTableLength = cardsonTable.length;
-
-		//If only one card.
 		if(selectCardLength === 1) {
-			return _isValidSingle(selectCard);
-			
-		} else if(selectCard[0].rank === selectCard[selectCardLength - 1]) { //pair, triple or all same number cards.
-			return _isValidPair(selectCard);
-		} else if(selectCardLength === 5) {
-			return _isValidTriplePlusTwo(selectCard);
-		} else if(selectCard[0].rank === selectCard[1].rank && selectCard[1].rank === selectCard[2].rank) { //if is 778899 or 777888
-			return _isValidPlane(selectCard);
+			return 'single';
+		} else if(_isValidPair(selectCard)) {
+			return 'pair';
+		} else if(_isValidBomb(selectCard)) {
+			return 'bomb';
+		} else if(_isValidStraight(selectCard)) {
+			return 'straight';
+		} else if(_isValidTriplePlusTwo(selectCard)) {
+			return 'fullHouse';
+		} else if(_isValidPlane(selectCard)) {
+			return 'plain';
 		}
+		return false;
+	};
+
+	var _isValidPlay = function(selectCard, playCase) {
+		var selectCardLength = selectCard.length;
+		//If only one card.
+		switch(playCase) {
+			case 'single':
+				return _isValidSingle(selectCard);
+			case 'pair':
+				return _isValidPair(selectCard);
+			case 'fullHouse':
+				return _isValidTriplePlusTwo(selectCard);
+			case 'bomb':
+				return _isValidBomb(selectCard);
+			case 'straight':
+				return _isValidStraight(selectCard);
+			case 'plain':
+				return _isValidPlane(selectCard);
+		}
+		return false;
 	};
 	return {
-		isValidPlay: _isValidPlay
+		isValidPlay: _isValidPlay,
+		isValidFirstPlay: _isValidFirstPlay
 	};
 };

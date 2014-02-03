@@ -233,15 +233,15 @@ lg.gameStart = new function(){
 		});
 		$('#callButton').on('click', function(){
 			//players[0].removeCards(selectCard);
-			lg.gameEngine.playerTurn(players, selectCard);
-			removePlayerCards(selectCardsDom);
-
-			displayCenterPlayedCards(lg.gameEngine.getCardsonTable());
-			$('#callButton').addClass('hidden');
-			//gamePlayTurn = 1;
-			//aiTurn(players);
-			selectCard = [];
-			selectCardsDom = [];
+			if(lg.gameEngine.playerTurn(players, selectCard)) {
+				removePlayerCards(selectCardsDom);
+				displayCenterPlayedCards(lg.gameEngine.getCardsonTable());
+				$('#callButton').addClass('hidden');
+				//gamePlayTurn = 1;
+				//aiTurn(players);
+				selectCard = [];
+				selectCardsDom = [];
+			}
 		});
 
 	};
