@@ -94,12 +94,12 @@ lg.gameStart = new function(){
 		var myCards = '';
 		var numberOfCards = cards.length;
 
-		for(var i = numberOfCards - 1; i >= 0; i--){
+		for(var i = 0; i < numberOfCards; i++){
 			myCards += buildPlayerCardStr(cards[i], 'cardsInMiddle');
 		}
 		$('.centerContent ul').empty().html(myCards);
 		$.each($('.centerContent li'), function(i, val){
-			$(val).css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2 + i * 20});
+			$(val).css({display:'block', top: ($(window).height() - cardHeight) / 2, left: ($(window).width() - cardWidth) / 2 - (2 - i) * 20});
 		})
 		
 	};

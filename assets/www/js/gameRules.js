@@ -50,7 +50,7 @@ lg.gameRules = new function(){
 			return false;
 		} else {
 			for(var i = 1; i < selectCardLength; i++) {
-				if(selectCard[i - 1].rank != selectCard[i].rank + 1) {
+				if(selectCard[i - 1].rank != selectCard[i].rank - 1) {
 					return false;
 				}
 			}

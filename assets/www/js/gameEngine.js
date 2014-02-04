@@ -25,15 +25,23 @@ lg.gameEngine = new function(){
 				currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
 			}
 			return true;
+		} else if(lg.gameRules.isValidFirstPlay(selectCard)){ // TODO: CHANGE HERE
+			_setCardsonTable(selectCard);
+			players[currentTurn].removeCards(selectCard);
+			while(currentTurn !== 0) {
+				players[currentTurn].aiPlay();
+				currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
+			}
+			return true;
 		} else {
 			return false;
 		}
 	};
 
 	var _sortCardsonTable = function(selectCard) {
-		selectCard =  _.sortBy(selectCard, function(card){
-			return card.rank * -1;
-		})
+		selectCard.sort(function(card1, card2){
+			return card1.rank - card2.rank;
+		});
 	};
 
 	var _getCardsonTable = function() {
