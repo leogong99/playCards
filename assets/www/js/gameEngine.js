@@ -2,22 +2,40 @@ lg.gameEngine = new function(){
 	'use strict'
 	var currentTurn = 0;
 	var cardsonTable = [];
+	var playCase = null;
+	var cards = [];
+	var players = [];
+
 	var _initGame = function() {		
 		$('#gameStartBtn').addClass('hidden');
 		$('#gamePage').removeClass('hidden');
-		lg.gameStart.start();
+		playDeckObj.init(numSetofCards, true);
+		playDeckObj.shuffleCard();
+		var cards = playDeckObj.getDeckCard();
+		var players = [];
+		
+		for(var i = 0; i < numofPlayer; i++) {
+			players[i] = new player();
+		}
+		lg.gameStart.start(cards, players, playDeckObj);
 	};
 
 	var _setCurrentTurn = function(turn) {
 		currentTurn = turn;
 	};
+	var _setCurrentCase = function(currentCase) {
+		playCase = currentCase;
+	};
+
 	var _setCardsonTable = function(cards) {
 		cardsonTable = cards;
 	};
 
 	var _playerTurn = function(players, selectCard) {
 		_sortCardsonTable(selectCard);
-		if(cardsonTable.length === 0 && lg.gameRules.isValidFirstPlay(selectCard)) {
+		var currentCase = lg.gameRules.isValidFirstPlay(selectCard);
+		if(cardsonTable.length === 0 && currentCase) {
+			_setCurrentCase(currentCase);
 			_setCardsonTable(selectCard);
 			players[currentTurn].removeCards(selectCard);
 			while(currentTurn !== 0) {
@@ -25,7 +43,7 @@ lg.gameEngine = new function(){
 				currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
 			}
 			return true;
-		} else if(lg.gameRules.isValidFirstPlay(selectCard)){ // TODO: CHANGE HERE
+		} else if(lg.gameRules.isValidPlay(selectCard, playCase) && lg.gameRules.isLargerthanTableCards(selectCard, cardsonTable, playCase)){ // TODO: CHANGE HERE
 			_setCardsonTable(selectCard);
 			players[currentTurn].removeCards(selectCard);
 			while(currentTurn !== 0) {
@@ -47,6 +65,7 @@ lg.gameEngine = new function(){
 	var _getCardsonTable = function() {
 		return cardsonTable;
 	};
+
 	return {
 		start: function() {
 			$('#gameStartBtn').bind('click', _initGame);

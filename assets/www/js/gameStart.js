@@ -247,15 +247,7 @@ lg.gameStart = new function(){
 	};
 
 	return {
-		start: function() {
-			playDeckObj.init(numSetofCards, true);
-			playDeckObj.shuffleCard();
-			var cards = playDeckObj.getDeckCard();
-			var players = [];
-			
-			for(var i = 0; i < numofPlayer; i++) {
-				players[i] = new player();
-			}
+		start: function(cards, players, playDeckObj) {
 			displayCenterCards(cards);
 			drawCards(players, playDeckObj);
 

@@ -107,8 +107,24 @@ lg.gameRules = new function(){
 		}
 		return false;
 	};
+
+	var _isLargerthanTableCards = function(selectCard, tableCard, playCase) {
+		switch(playCase) {
+			case 'single':
+			case 'bomb':
+			case 'straight':
+			case 'plain':
+			case 'pair':
+				return selectCard[0].rank > tableCard[0].rank;
+			case 'fullHouse':
+				return selectCard[2].rank > tableCard[2].rank;
+		}
+		return false;
+	};
+
 	return {
 		isValidPlay: _isValidPlay,
-		isValidFirstPlay: _isValidFirstPlay
+		isValidFirstPlay: _isValidFirstPlay,
+		isLargerthanTableCards: _isLargerthanTableCards
 	};
 };
