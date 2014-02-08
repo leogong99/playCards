@@ -3,7 +3,7 @@ lg.gameStart = new function(){
 
 	var buildPlayerCardStr = function(card, className) {
 		var myCards = '<li data-cardrank="' + card.rank + '" data-cardcolor="' + card.color + '" class="' + className + '">';
-		myCards += '<img src="./img/cards/'+ (card.rank + 1) + '_of_' + card.color + '.png"/>';
+		myCards += '<img src="./img/cards/'+ card.rank + '_of_' + card.color + '.png"/>';
 		myCards += '</li>';
 		return myCards;
 	}

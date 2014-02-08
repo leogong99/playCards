@@ -8,14 +8,14 @@ var playDeckObj = new function(){
 	this.shuffleRegularCard = function(numofColors){
 		for(var n = 0; n < NUMOFCARDSINONESET; n++) {
 			var card = new playCardObj();
-			card.initial(parseInt(n/numofColors), COLORFORCARDS[n%numofColors]);
+			card.initial(Math.floor(n/numofColors) + CARDSTARTNUM, COLORFORCARDS[n%numofColors]);
 			this.deckCard.push(card);
 		}
 	};
 	this.shuffleJokerCard = function(numofJokers){
 		for(var n = 0; n < NUMOFJOKERINONESET; n++) {
 			var joker = new playCardObj();
-			joker.initial(14 + n, COLORFORJOKERS[n%numofJokers]);
+			joker.initial(16 + n, COLORFORJOKERS[n%numofJokers]);
 			this.deckCard.push(joker);
 		}
 	};

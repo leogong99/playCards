@@ -32,6 +32,7 @@ var animateRightObj = {
 
 var NUMOFCARDSINONESET = 52;
 var NUMOFJOKERINONESET = 2;
+var CARDSTARTNUM = 3;
 var COLORFORCARDS = ['hearts', 'spades', 'clubs', 'diamonds'];
 var COLORFORJOKERS = ['black', 'red'];
 
