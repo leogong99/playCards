@@ -15,7 +15,7 @@ lg.gameEngine = new function(){
 		var players = [];
 		
 		for(var i = 0; i < numofPlayer; i++) {
-			players[i] = new player();
+			players[i] = new player(Math.ceil(Math.random()*10));
 		}
 		lg.gameStart.start(cards, players, playDeckObj);
 	};
@@ -47,7 +47,7 @@ lg.gameEngine = new function(){
 			_setCardsonTable(selectCard);
 			players[currentTurn].removeCards(selectCard);
 			while(currentTurn !== 0) {
-				players[currentTurn].aiPlay();
+				players[currentTurn].aiPlay(cardsonTable, playCase);
 				currentTurn = (currentTurn == players.length - 1) ? 0 : (currentTurn + 1);
 			}
 			return true;
