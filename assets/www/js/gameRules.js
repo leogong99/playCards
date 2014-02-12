@@ -129,7 +129,7 @@ lg.gameRules = new function() {
 		var m = 0;
 		var cardObj = [{
 			card: [cardsinHand[i]],
-			count 1
+			count: 1
 		}];
 
 		for (i = 1; i < cardsinHand.length; i++) {
